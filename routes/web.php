@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\VisitorController;
+use App\Http\Controllers\OfficerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +29,14 @@ Route::put('/post/{post}/update',[PostController::class,'update'])->name('posts.
 //Route for Visitor contorller
 Route::get('/visitor',[VisitorController::class,'index'])->name('visitor.index');
 Route::get('/visitor/create',[VisitorController::class,'create'])->name('visitor.create');
-Route::post('/visitor',[visitorController::class,'store'])->name('visitor.store');
+Route::post('/visitor',[VisitorController::class,'store'])->name('visitor.store');
+Route::get('/visitor/{visitor}/edit',[VisitorController::class,'edit'])->name('visitor.edit');
+Route::put('/visitor/{visitor}/update',[VisitorController::class,'update'])->name('visitor.update');
 
 
+//Route for Officer controller
+Route::get('/officer',[OfficerController::class,'index'])->name('officer.index');
+Route::get('/officer/create', [OfficerController::class, 'create'])->name('officer.create');
+Route::post('/officer', [OfficerController::class, 'store'])->name('officer.store');
+Route::get('/officer/{officer}/edit', [OfficerController::class, 'edit'])->name('officer.edit');
+Route::put('/officer/{officer}', [OfficerController::class, 'update'])->name('officer.update');

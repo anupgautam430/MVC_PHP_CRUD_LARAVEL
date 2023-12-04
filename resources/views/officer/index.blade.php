@@ -8,7 +8,7 @@
     <h1>Visitor</h1>
     <div>
         <div>
-            <a href="{{route('visitor.create')}}">Add new post</a>
+            <a href="{{route('officer.create')}}">Add new post</a>
         </div>
         @if(session()->has('success'))
         <div>
@@ -20,19 +20,19 @@
         <table border="1">
             <tr>
                 <th>Name</th>
-                <th>Mpbile_no</th>
-                <th>Email_Address</th>
+                <th>Post</th>
                 <th>Status</th>
-                <th>Handle</th>
+                <th>Work_Start</th>
+                <th>Work_End</th>
             </tr>
-            @foreach($visitor as $visit)
+            @foreach($officer as $office)
             <tr>
-                <th>{{$visit->Name}}</th>
-                <th>{{$visit->Mobile_no}}</th>
-                <th>{{$visit->Email_Address}}</th>
-                <th>{{$visit->Status}}</th>
+                <th>{{$office->name}}</th>
+                <th>{{$office->post->name}}</th>
+                <th>{{$office->work_start_time}}</th>
+                <th>{{$office->work_end_time}}</th>
                 <th>
-                    <a href="{{route('visitor.edit', ['visitor' => $visit])}}">Edit</a>
+                    <a href="{{route('officer.edit', ['officer' => $office])}}">Edit</a>
                 </th>
             </tr>
             @endforeach

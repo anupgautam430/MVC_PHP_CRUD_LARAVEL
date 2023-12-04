@@ -6,10 +6,10 @@
     <title>Create post</title>
 </head>
 <body>
-    <h1>this is a create view of visitor</h1>
-    <form method="post" action="{{route('visitor.store')}}" >
+    <h1>this is a edit view of visitor</h1>
+    <form method="post" action="{{route('visitor.update', ['visitor' => $visitor])}}" >
         @csrf
-        @method('post')
+        @method('put')
 
         <div>
             @if($errors->any())
@@ -22,15 +22,15 @@
         </div>
         <div>
             <label>Name</label>
-            <input type="text" name="Name" placeholder="Enter Post">
+            <input type="text" name="Name"  value="{{$visitor->Name}}">
         </div>
         <div>
             <label>Mobile.no</label>
-            <input type="Number" name="Mobile_no" placeholder="Enter Phone number">
+            <input type="Number" name="Mobile_no" value="{{$visitor->Mobile_no}}">
         </div>
         <div>
             <label>Email</label>
-            <input type="email" name="Email_Address" placeholder="Enter Email Address">
+            <input type="email" name="Email_Address" value="{{$visitor->Email_Address}}">
         </div>
         <div>
             <label>status</label>
@@ -40,7 +40,7 @@
             </select>
         </div>
         <div>
-            <input type="submit" value="Add Visitor">
+            <input type="submit" value="Update Visitor">
         </div>
     </form>
 </body>

@@ -12,4 +12,9 @@ class Post extends Model
         'name',
         'status'
     ];
+
+    public function officers()
+    {
+        return $this->hasMany(Officer::class, 'post_id');
+    }
 }
