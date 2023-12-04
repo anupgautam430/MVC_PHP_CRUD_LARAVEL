@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\WorkofdayController;
+use App\Http\Controllers\ActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,3 +51,10 @@ Route::get('/workofday/create', [WorkofdayController::class, 'create'])->name('w
 Route::post('/workofday', [WorkofdayController::class, 'store'])->name('workofday.store');
 Route::get('/workofday/{workofday}/edit', [WorkofdayController::class, 'edit'])->name('workofday.edit');
 Route::put('/workofday/{workofday}', [WorkofdayController::class, 'update'])->name('workofday.update');
+
+//Route for ActivityController
+Route::get('/activity',[ActivityController::class,'index'])->name('activity.index');
+Route::get('/activity/create', [ActivityController::class, 'create'])->name('activity.create');
+Route::post('/activity', [ActivityController::class, 'store'])->name('activity.store');
+Route::get('/activity/{activity}/edit', [ActivityController::class, 'edit'])->name('activity.edit');
+Route::put('/activity/{activity}', [ActivityController::class, 'update'])->name('activity.update');
