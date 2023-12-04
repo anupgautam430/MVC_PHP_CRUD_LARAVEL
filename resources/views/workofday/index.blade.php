@@ -1,15 +1,14 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Work_Days index</title>
 </head>
 <body>
-    <h1>Post</h1>
+    <h1>Work days in a week </h1>
     <div>
         <div>
-            <a href="{{route('post.create')}}">Add new post</a>
+            <a href="{{route('workofday.create')}}">Add new post</a>
         </div>
         @if(session()->has('success'))
         <div>
@@ -20,21 +19,21 @@
         @endif
         <table border="1">
             <tr>
-                <th>Name</th>
-                <th>Status</th>
+                <th>Officer Name</th>
+                <th>Work Day Of Week</th>
                 <th>Edit</th>
-                <th>Handle</th>
+                <th>Handel</th>
+
             </tr>
-            @foreach($post as $pro)
+            @foreach($workday as $workd)
             <tr>
-                <th>{{$pro->name}}</th>
-                <th>{{$pro->status}}</th>
-                <th>
-                    <a href="{{route('post.edit', ['post' => $pro])}}">Edit</a>
-                </th>
+                <td>{{$workd->officer->name}}</td>
+                <td>{{$workd->day_of_week}}</td>
+                <td>
+                    <a href="{{route('workofday.edit', ['workofday' => $workd])}}">Edit</a>
+                </td>
                 <td><a href="#">activate</a>|<a href="#">deactive</a></td>
             </tr>
-
             @endforeach
         </table>
     </div>

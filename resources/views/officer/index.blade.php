@@ -2,10 +2,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visitor</title>
+    <title>Officer index</title>
 </head>
 <body>
-    <h1>Visitor</h1>
+    <h1>Officer</h1>
     <div>
         <div>
             <a href="{{route('officer.create')}}">Add new post</a>
@@ -21,19 +21,24 @@
             <tr>
                 <th>Name</th>
                 <th>Post</th>
-                <th>Status</th>
                 <th>Work_Start</th>
                 <th>Work_End</th>
+                <th>Status</th>
+                <th>Edit</th>
+                <th>Handel</th>
+
             </tr>
             @foreach($officer as $office)
             <tr>
-                <th>{{$office->name}}</th>
-                <th>{{$office->post->name}}</th>
-                <th>{{$office->work_start_time}}</th>
-                <th>{{$office->work_end_time}}</th>
-                <th>
+                <td>{{$office->name}}</td>
+                <td>{{$office->post->name}}</td>
+                <td>{{$office->work_start_time}}</td>
+                <td>{{$office->work_end_time}}</td>
+                <td>{{$office->status}}</td>
+                <td>
                     <a href="{{route('officer.edit', ['officer' => $office])}}">Edit</a>
-                </th>
+                </td>
+                <td><a href="#">activate</a>|<a href="#">deactive</a></td>
             </tr>
             @endforeach
         </table>

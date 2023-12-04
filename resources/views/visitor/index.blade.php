@@ -23,6 +23,7 @@
                 <th>Mpbile_no</th>
                 <th>Email_Address</th>
                 <th>Status</th>
+                <th>Edit</th>
                 <th>Handle</th>
             </tr>
             @foreach($visitor as $visit)
@@ -34,6 +35,7 @@
                 <th>
                     <a href="{{route('visitor.edit', ['visitor' => $visit])}}">Edit</a>
                 </th>
+                <td><a href="#">activate</a>|<a href="#">deactive</a></td>
             </tr>
             @endforeach
         </table>

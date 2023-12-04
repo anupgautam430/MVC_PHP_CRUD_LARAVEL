@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\OfficerController;
+use App\Http\Controllers\WorkofdayController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,3 +42,11 @@ Route::get('/officer/create', [OfficerController::class, 'create'])->name('offic
 Route::post('/officer', [OfficerController::class, 'store'])->name('officer.store');
 Route::get('/officer/{officer}/edit', [OfficerController::class, 'edit'])->name('officer.edit');
 Route::put('/officer/{officer}', [OfficerController::class, 'update'])->name('officer.update');
+
+
+//Route for WorkDays Controller
+Route::get('/workofday',[WorkofdayController::class,'index'])->name('workofday.index');
+Route::get('/workofday/create', [WorkofdayController::class, 'create'])->name('workofday.create');
+Route::post('/workofday', [WorkofdayController::class, 'store'])->name('workofday.store');
+Route::get('/workofday/{workofday}/edit', [WorkofdayController::class, 'edit'])->name('workofday.edit');
+Route::put('/workofday/{workofday}', [WorkofdayController::class, 'update'])->name('workofday.update');

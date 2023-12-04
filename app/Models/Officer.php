@@ -22,6 +22,12 @@ class Officer extends Model
         return $this->belongsTo(Post::class);
     }
 
+    //this is for the connection with workofdays table
+    public function workDays()
+    {
+        return $this->hasMany(WorkDay::class, 'officer_id');
+    }
+
     public function activate()
     {
         // activation logic
