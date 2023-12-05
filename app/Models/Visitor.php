@@ -15,4 +15,9 @@ class Visitor extends Model
         'Email_Address',
         'Status'
     ];
+
+    public function appointmentsWithOfficers()
+    {
+        return $this->hasMany(Appointment::class)->with('officer');
+    }
 }

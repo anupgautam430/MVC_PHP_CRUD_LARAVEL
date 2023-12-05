@@ -8,10 +8,13 @@
 
 </head>
 <body>
-    <h1>Post</h1>
-    <div>
+    <div class="container">
+        <div class="container m-4">
+            <a class="btn btn-secondary" href="{{ url('/') }}">home</a>
+        </div>
+        <h1 class="text-center">Post</h1>
         <div>
-            <a href="{{route('post.create')}}">Add new post</a>
+            <a class="btn btn-primary" href="{{route('post.create')}}">Add new post</a>
         </div>
         @if(session()->has('success'))
         <div>
@@ -20,24 +23,27 @@
 
 
         @endif
-        <table border="1">
-            <tr>
+        <table class="table">
+            <tr class="text-center">
                 <th>Name</th>
                 <th>Status</th>
                 <th>Edit</th>
                 <th>Handle</th>
             </tr>
             @foreach($post as $pro)
-            <tr>
+            <tr class="text-center">
                 <th>{{$pro->name}}</th>
                 <th>{{$pro->status}}</th>
                 <th>
-                    <a href="{{route('post.edit', ['post' => $pro])}}">Edit</a>
+                    <a class="btn btn-dark" href="{{route('post.edit', ['post' => $pro])}}">Edit</a>
                 </th>
                 <td><form action="{{ route('post.handle', ['post' => $pro]) }}" method="POST">
                     @csrf
                     @method('post')
-                    <button type="submit" name="action" value="activate">Activate</button>
+                    <button class="btn btn-danger" type="submit" name="action" value="{{ $pro->status == 'active' ? 'deactivate' : 'activate' }}">
+                        {{ $pro->status == 'active' ? 'Inactive' : 'Activate' }}
+                    </button>
+
                     </form>
                 </td>
                 </tr>

@@ -38,6 +38,8 @@ Route::get('/visitor/create',[VisitorController::class,'create'])->name('visitor
 Route::post('/visitor',[VisitorController::class,'store'])->name('visitor.store');
 Route::get('/visitor/{visitor}/edit',[VisitorController::class,'edit'])->name('visitor.edit');
 Route::put('/visitor/{visitor}/update',[VisitorController::class,'update'])->name('visitor.update');
+Route::get('/visitors/{visitor}/appointments', [VisitorController::class, 'appointments'])->name('visitor.appointments');
+
 
 
 //Route for Officer controller

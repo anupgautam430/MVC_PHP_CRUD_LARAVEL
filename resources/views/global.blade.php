@@ -21,7 +21,7 @@
             <a class="nav-link active rounded-5" id="post-tab" href="{{ route('workofday.index') }}">WORK DAYS</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link active rounded-5" id="post-tab" href="{{ route('activity.index') }}">VISITOR</a>
+            <a class="nav-link active rounded-5" id="post-tab" href="{{ route('activity.index') }}">ACTIVITY</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link active rounded-5" id="post-tab" href="{{ route('appointments.index') }}">APPOINTMENT</a>

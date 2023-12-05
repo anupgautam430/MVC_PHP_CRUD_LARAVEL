@@ -7,20 +7,21 @@
 
 </head>
 <body>
-    <h1>Officer</h1>
-    <div>
+    <div class="container">
+        <h1 class="text-center m-4">Officer</h1>
+    <div class="container m-4">
+        <a class="btn btn-secondary" href="{{ url('/') }}">home</a>
+    </div>
         <div>
-            <a href="{{route('officer.create')}}">Add new post</a>
+            <a class="btn  btn-primary" href="{{route('officer.create')}}">Add new post</a>
         </div>
         @if(session()->has('success'))
         <div>
             {{session('success')}}
         </div>
-
-
         @endif
-        <table border="1">
-            <tr>
+        <table class="table">
+            <tr class="text-center">
                 <th>Name</th>
                 <th>Post</th>
                 <th>Work_Start</th>
@@ -31,14 +32,14 @@
 
             </tr>
             @foreach($officer as $office)
-            <tr>
+            <tr class="text-center">
                 <td>{{$office->name}}</td>
                 <td>{{$office->post->name}}</td>
                 <td>{{$office->work_start_time}}</td>
                 <td>{{$office->work_end_time}}</td>
                 <td>{{$office->status}}</td>
                 <td>
-                    <a href="{{route('officer.edit', ['officer' => $office])}}">Edit</a>
+                    <a class="btn btn-dark" href="{{route('officer.edit', ['officer' => $office])}}">Edit</a>
                 </td>
                 <td><a href="#">activate</a>|<a href="#">deactive</a></td>
             </tr>

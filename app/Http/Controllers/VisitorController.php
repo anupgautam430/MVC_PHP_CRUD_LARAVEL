@@ -51,4 +51,13 @@ class VisitorController extends Controller
 
             return redirect(route('visitor.index'))->with('success', 'Visitor updated successfully');
         }
+
+        //appointment 
+        public function appointments(Visitor $visitor)
+        {
+            // Load the visitor appointments with officers
+            $appointments = $visitor->appointmentsWithOfficers;
+
+            return view('visitor.appointments', ['visitor' => $visitor, 'appointments' => $appointments]);
+        }
 }

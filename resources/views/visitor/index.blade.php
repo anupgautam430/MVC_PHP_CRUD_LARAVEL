@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Visitor</h1>
-    <div>
+    <div class="container">
         <div>
             <a href="{{route('visitor.create')}}">Add new post</a>
         </div>
@@ -19,8 +19,8 @@
 
 
         @endif
-        <table border="1">
-            <tr>
+        <table class="table">
+            <tr class="text-center">
                 <th>Name</th>
                 <th>Mpbile_no</th>
                 <th>Email_Address</th>
@@ -29,13 +29,15 @@
                 <th>Handle</th>
             </tr>
             @foreach($visitor as $visit)
-            <tr>
+            <tr class="text-center">
                 <th>{{$visit->Name}}</th>
                 <th>{{$visit->Mobile_no}}</th>
                 <th>{{$visit->Email_Address}}</th>
                 <th>{{$visit->Status}}</th>
                 <th>
-                    <a href="{{route('visitor.edit', ['visitor' => $visit])}}">Edit</a>
+                    <a class="btn btn-dark" href="{{route('visitor.edit', ['visitor' => $visit])}}">Edit</a>|
+                    <a href="{{ route('visitor.appointments', ['visitor' => $visit]) }}" class="btn btn-info">View Appointments</a>
+
                 </th>
                 <td><a href="#">activate</a>|<a href="#">deactive</a></td>
             </tr>

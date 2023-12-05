@@ -7,10 +7,10 @@
 
 </head>
 <body>
-    <h1>Work days in a week </h1>
     <div class="container">
+        <h1 class="text-center m-4">Work days in a week </h1>
         <div>
-            <a href="{{route('workofday.create')}}">Add new post</a>
+            <a class="btn btn-primary" href="{{route('workofday.create')}}">Add new post</a>
         </div>
         @if(session()->has('success'))
         <div>
@@ -19,8 +19,8 @@
 
 
         @endif
-        <table class="tbl tbl-1">
-            <tr>
+        <table class="table">
+            <tr class="text-center">
                 <th>Officer Name</th>
                 <th>Work Day Of Week</th>
                 <th>Edit</th>
@@ -28,7 +28,7 @@
 
             </tr>
             @foreach($workday as $workd)
-            <tr>
+            <tr class="text-center">
                 <td>{{$workd->officer->name}}</td>
                 <td>{{$workd->day_of_week}}</td>
                 <td>

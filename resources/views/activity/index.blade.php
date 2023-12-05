@@ -7,10 +7,13 @@
 
 </head>
 <body>
-    <h1>Activity</h1>
-    <div>
+    <div class="container">
+        <div class="container m-4">
+            <a class="btn btn-secondary" href="{{ url('/') }}">home</a>
+        </div>
+        <h1 class="text-center">Activity</h1>
         <div>
-            <a href="{{route('activity.create')}}">Add new post</a>
+            <a class="btn btn-primary" href="{{route('activity.create')}}">Add new activity</a>
         </div>
         @if(session()->has('success'))
         <div>
@@ -19,7 +22,7 @@
 
 
         @endif
-        <table border="1">
+        <table class="table">
             <tr>
                 <th>Officer</th>
                 <th>Visitor</th>
@@ -45,7 +48,7 @@
                 <td>{{$active->end_time}}</td>
                 <td>{{$active->added_on}}</td>
                 <td>
-                    <a href="{{route('activity.edit', ['activity' => $active])}}">Edit</a>
+                    <a class="btn btn-dark" href="{{route('activity.edit', ['activity' => $active])}}">Edit</a>
                 </td>
                 <td><a href="#">activate</a>|<a href="#">deactive</a></td>
             </tr>
