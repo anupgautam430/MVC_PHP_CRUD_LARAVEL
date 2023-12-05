@@ -37,12 +37,12 @@ class ActivityController extends Controller
     {
         $officer = Officer::pluck('name', 'id');
         $visitor = Visitor::pluck('name', 'id');
-        return view('activity.edit', ['activity'=> $activity],compact('officer','visitor'));
+        return view('activity.edit', compact('activity', 'officer', 'visitor'));
     }
 
         //update
         public function update(Activity $activity, Request $request){
-            $data = $this->validateActisity($request);
+            $data = $this->validateActivity($request);
 
             $activity->update($data);
 

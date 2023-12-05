@@ -6,6 +6,7 @@ use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\WorkofdayController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ use App\Http\Controllers\ActivityController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('global');
 });
 
 Route::get('/post',[PostController::class,'index'])->name('post.index');
@@ -27,6 +28,8 @@ Route::get('/post/create',[PostController::class,'create'])->name('post.create')
 Route::post('/post',[PostController::class,'store'])->name('post.store');
 Route::get('/post/{post}/edit',[PostController::class,'edit'])->name('post.edit');
 Route::put('/post/{post}/update',[PostController::class,'update'])->name('posts.update');
+Route::post('/post/{post}/handle',[PostController::class,'handle'] )->name('post.handle');
+
 
 
 //Route for Visitor contorller
@@ -58,3 +61,9 @@ Route::get('/activity/create', [ActivityController::class, 'create'])->name('act
 Route::post('/activity', [ActivityController::class, 'store'])->name('activity.store');
 Route::get('/activity/{activity}/edit', [ActivityController::class, 'edit'])->name('activity.edit');
 Route::put('/activity/{activity}', [ActivityController::class, 'update'])->name('activity.update');
+
+
+//route for Appointment
+Route::get('/appointments',[AppointmentController::class,'index'])->name('appointments.index');
+Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
+Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');

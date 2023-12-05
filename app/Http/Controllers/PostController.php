@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Officer;
+
+
 
 class PostController extends Controller
 {
@@ -44,5 +47,25 @@ class PostController extends Controller
         $post->update($data);
 
         return redirect(route('post.index'))->with('success', 'Post updated successfully');
+    }
+
+    //handle the activate and deactivate
+    public function handle(Post $post)
+    {
+        // Check if any active officer is associated with the post
+        $activeOfficers = Officer::where('id', $post->id)
+                                ->where('status', 'active')
+                                ->exists();
+
+        // If any active officer is found, prevent deactivation
+        if ($activeOfficers && $post->status === 'inactive') {
+            return redirect(route('post.index'))->with('error', 'Cannot deactivate post. Active officer(s) found.');
+        }
+
+        // handle the status
+        $newStatus = $post->status === 'active' ? 'inactive' : 'active';
+        $post->update(['status' => $newStatus]);
+
+        return redirect(route('post.index'))->with('success', 'Post status handeled successfully');
     }
 }

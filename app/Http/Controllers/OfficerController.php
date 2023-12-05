@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Officer;
 use App\Models\Post;
+use App\Models\WorkDays;
 
 class OfficerController extends Controller
 {
@@ -32,7 +33,8 @@ class OfficerController extends Controller
     public function edit(Officer $officer)
         {
             $post = Post::pluck('name', 'id');
-            return view('officer.edit', ['officer'=> $officer],compact('post'));
+            $workday=WorkDays::pluck('officer_id','day_of_week');
+            return view('officer.edit', ['officer'=> $officer],compact('post','workday'));
         }
 
         public function update(Officer $officer, Request $request){
