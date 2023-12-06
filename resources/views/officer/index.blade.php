@@ -7,18 +7,22 @@
 
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center m-4">Officer</h1>
     <div class="container m-4">
-        <a class="btn btn-secondary" href="{{ url('/') }}">home</a>
-    </div>
+    <a class="btn btn-dark" href="{{ url('/') }}">home</a>
+        <h1 class="text-center">Officer Information</h1>
         <div>
             <a class="btn  btn-primary" href="{{route('officer.create')}}">Add new post</a>
         </div>
         @if(session()->has('success'))
-        <div>
-            {{session('success')}}
-        </div>
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
         @endif
         <table class="table">
             <tr class="text-center">
@@ -29,7 +33,6 @@
                 <th>Status</th>
                 <th>Edit</th>
                 <th>Handel</th>
-
             </tr>
             @foreach($officer as $office)
             <tr class="text-center">
@@ -40,8 +43,14 @@
                 <td>{{$office->status}}</td>
                 <td>
                     <a class="btn btn-dark" href="{{route('officer.edit', ['officer' => $office])}}">Edit</a>
+                    <a class="btn btn-info" href="{{ route('officer.appointments', ['officer' => $office]) }}" class="btn btn-info">View Appointments</a>
                 </td>
-                <td><a href="#">activate</a>|<a href="#">deactive</a></td>
+                <td><form action="{{ route('officer.handle', ['officer' => $office]) }}" method="post">
+                     @csrf
+                            <button class="btn btn-danger" type="submit" name="action" value="{{ $office->status == 'active' ? 'deactivate' : 'activate' }}">
+                             {{ $office->Status == 'active' ? 'Deactivate' : 'Activate' }}
+                             </button>
+                    </form></td>
             </tr>
             @endforeach
         </table>

@@ -53,16 +53,16 @@ class PostController extends Controller
     public function handle(Post $post)
     {
         // Check if any active officer is associated with the post
-        $activeOfficers = Officer::where('id', $post->id)
+        $activeOfficers = Officer::where('post_id', $post->id)
                                 ->where('status', 'active')
                                 ->exists();
 
         // If any active officer is found, prevent deactivation
-        if ($activeOfficers && $post->status === 'inactive') {
-            return redirect(route('post.index'))->with('error', 'Cannot deactivate post. Active officer(s) found.');
+        if ($post->status === 'active' && $activeOfficers) {
+            return redirect(route('post.index'))->with('error', 'Cannot activate post. Active officer found.');
         }
-
-        // handle the status
+        
+        // this section handle the status
         $newStatus = $post->status === 'active' ? 'inactive' : 'active';
         $post->update(['status' => $newStatus]);
 

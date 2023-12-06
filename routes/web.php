@@ -39,6 +39,7 @@ Route::post('/visitor',[VisitorController::class,'store'])->name('visitor.store'
 Route::get('/visitor/{visitor}/edit',[VisitorController::class,'edit'])->name('visitor.edit');
 Route::put('/visitor/{visitor}/update',[VisitorController::class,'update'])->name('visitor.update');
 Route::get('/visitors/{visitor}/appointments', [VisitorController::class, 'appointments'])->name('visitor.appointments');
+Route::post('/visitors/{visitor}/handle', [VisitorController::class, 'handle'])->name('visitor.handle');
 
 
 
@@ -48,6 +49,9 @@ Route::get('/officer/create', [OfficerController::class, 'create'])->name('offic
 Route::post('/officer', [OfficerController::class, 'store'])->name('officer.store');
 Route::get('/officer/{officer}/edit', [OfficerController::class, 'edit'])->name('officer.edit');
 Route::put('/officer/{officer}', [OfficerController::class, 'update'])->name('officer.update');
+Route::get('/officer/{officer}/appointments', [OfficerController::class, 'appointments'])->name('officer.appointments');
+Route::post('/officer/{officer}/handle', [OfficerController::class, 'handle'])->name('officer.handle');
+
 
 
 //Route for WorkDays Controller

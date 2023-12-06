@@ -8,13 +8,15 @@
 
 </head>
 <body>
-    <h1>this is a edit view of visitor</h1>
-    <form method="post" action="{{route('visitor.update', ['visitor' => $visitor])}}" >
-        @csrf
-        @method('put')
-
-        <div>
-            @if($errors->any())
+    <div class="container m-4">
+       <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
+        <h1>Edit visitors info</h1>
+        <form class="form-control" method="post" action="{{route('visitor.update', ['visitor' => $visitor])}}" >
+            @csrf
+            @method('put')
+            
+            <div>
+                @if($errors->any())
                 <ul>
                     @foreach($errors->all() as $error)
                     <li>{{$error}}</li>
@@ -22,29 +24,30 @@
                 </ul>
             @endif
         </div>
-        <div>
+        <div class="form-group">
             <label>Name</label>
-            <input type="text" name="Name"  value="{{$visitor->Name}}">
+            <input class="form-control" type="text" name="Name"  value="{{$visitor->Name}}">
         </div>
-        <div>
+        <div class="form-group">
             <label>Mobile.no</label>
-            <input type="Number" name="Mobile_no" value="{{$visitor->Mobile_no}}">
+            <input  class="form-control" type="Number" name="Mobile_no" value="{{$visitor->Mobile_no}}">
         </div>
-        <div>
+        <div class="form-group">
             <label>Email</label>
-            <input type="email" name="Email_Address" value="{{$visitor->Email_Address}}">
+            <input class="form-control" type="email" name="Email_Address" value="{{$visitor->Email_Address}}">
         </div>
-        <div>
+        <div class="form-group">
             <label>status</label>
-            <select name="Status" id="Status">
+            <select class="form-control" name="Status" id="Status">
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
             </select>
         </div>
-        <div>
-            <input type="submit" value="Update Visitor">
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Update Visitor">
         </div>
     </form>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>

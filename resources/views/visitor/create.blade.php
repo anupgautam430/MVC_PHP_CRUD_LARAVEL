@@ -8,12 +8,14 @@
 
 </head>
 <body>
-    <h1>this is a create view of visitor</h1>
-    <form method="post" action="{{route('visitor.store')}}" >
-        @csrf
-        @method('post')
-
-        <div>
+    <div class="container m-4">
+        <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
+        <h1>Add new Visitor</h1>
+        <form class="form-control" method="post" action="{{route('visitor.store')}}" >
+            @csrf
+            @method('post')
+            
+        <div class="form-group">
             @if($errors->any())
                 <ul>
                     @foreach($errors->all() as $error)
@@ -22,30 +24,31 @@
                 </ul>
             @endif
         </div>
-        <div>
+        <div class="form-group">
             <label>Name</label>
-            <input type="text" name="Name" placeholder="Enter Post">
+            <input class="form-control" type="text" name="Name" placeholder="Enter Post">
         </div>
-        <div>
+        <div class="form-group">
             <label>Mobile.no</label>
-            <input type="Number" name="Mobile_no" placeholder="Enter Phone number">
+            <input class="form-control" type="Number" name="Mobile_no" placeholder="Enter Phone number">
         </div>
-        <div>
+        <div class="form-group">
             <label>Email</label>
-            <input type="email" name="Email_Address" placeholder="Enter Email Address">
+            <input class="form-control" type="email" name="Email_Address" placeholder="Enter Email Address">
         </div>
-        <div>
+        <div class="form-group">
             <label>status</label>
-            <select name="Status" id="Status">
+            <select class="form-control" name="Status" id="Status">
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
             </select>
         </div>
         <div>
-            <input type="submit" value="Add Visitor">
+            <input class="btn btn-primary m-1" type="submit" value="Add Visitor">
         </div>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</div>
 
 </body>
 </html>

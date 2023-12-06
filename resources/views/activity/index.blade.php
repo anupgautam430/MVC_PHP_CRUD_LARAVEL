@@ -7,20 +7,22 @@
 
 </head>
 <body>
-    <div class="container">
-        <div class="container m-4">
-            <a class="btn btn-secondary" href="{{ url('/') }}">home</a>
-        </div>
+    <div class="container m-4">
+            <a class="btn btn-dark" href="{{ url('/') }}">home</a>
         <h1 class="text-center">Activity</h1>
         <div>
             <a class="btn btn-primary" href="{{route('activity.create')}}">Add new activity</a>
         </div>
         @if(session()->has('success'))
-        <div>
-            {{session('success')}}
-        </div>
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-
+        @if(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
         @endif
         <table class="table">
             <tr>
@@ -39,7 +41,8 @@
             @foreach($activity as $active)
             <tr>
                 <td>{{$active->officer->name}}</td>
-                <td>{{$active->visitor->name}}</td>
+                <td>{{$active->visitor->Name}}</td>
+
                 <td>{{$active->name}}</td>
                 <td>{{$active->type}}</td>
                 <td>{{$active->status}}</td>

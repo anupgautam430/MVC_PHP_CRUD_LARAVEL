@@ -28,22 +28,14 @@ class Officer extends Model
         return $this->hasMany(WorkDays::class, 'officer_id');
     }
 
-    public function activate()
+    public function appointmentsWithVisitor()
     {
-        // activation logic
-        if ($this->status === 'Inactive') {
-            $this->status = 'Active';
-            
-        }
+        return $this->hasMany(Appointment::class)->with('visitor');
     }
 
-    public function deactivate()
+    //accessing appointment table
+    public function appointments()
     {
-        //deactivation 
-        if ($this->status === 'Active') {
-            $this->status = 'Inactive';
-            
-            
-        }
+        return $this->hasMany(Appointment::class);
     }
 }

@@ -7,17 +7,22 @@
 
 </head>
 <body>
-    <h1>Visitor</h1>
-    <div class="container">
-        <div>
-            <a href="{{route('visitor.create')}}">Add new post</a>
+    <div class="container m-4 p-1">
+        <a class="btn btn-dark" href="{{url('/')}}">Home</a>
+        <h1 class="text-center">Visitor</h1>
+        <div class="container">
+            <a class="btn btn-primary" href="{{route('visitor.create')}}">Add new Visitor</a>
         </div>
         @if(session()->has('success'))
-        <div>
-            {{session('success')}}
-        </div>
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-
+        @if(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
         @endif
         <table class="table">
             <tr class="text-center">
@@ -36,10 +41,17 @@
                 <th>{{$visit->Status}}</th>
                 <th>
                     <a class="btn btn-dark" href="{{route('visitor.edit', ['visitor' => $visit])}}">Edit</a>|
-                    <a href="{{ route('visitor.appointments', ['visitor' => $visit]) }}" class="btn btn-info">View Appointments</a>
+                    <a class="btn btn-info" href="{{ route('visitor.appointments', ['visitor' => $visit]) }}" class="btn btn-info">View Appointments</a>
 
                 </th>
-                <td><a href="#">activate</a>|<a href="#">deactive</a></td>
+                <td>
+                    <form action="{{ route('visitor.handle', ['visitor' => $visit]) }}" method="post">
+                     @csrf
+                            <button class="btn btn-danger" type="submit" name="action" value="{{ $visit->Status == 'active' ? 'deactivate' : 'activate' }}">
+                             {{ $visit->Status == 'active' ? 'Deactivate' : 'Activate' }}
+                             </button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </table>

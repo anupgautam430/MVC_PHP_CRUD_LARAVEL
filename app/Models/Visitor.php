@@ -20,4 +20,10 @@ class Visitor extends Model
     {
         return $this->hasMany(Appointment::class)->with('officer');
     }
+
+    //accessing appointment table
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

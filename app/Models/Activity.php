@@ -30,4 +30,5 @@ class Activity extends Model
     {
         return $this->belongsTo(Visitor::class);
     }
+    
 }

@@ -45,6 +45,54 @@ class OfficerController extends Controller
             return redirect(route('officer.index'))->with('success', 'Officer updated successfully');
         }
 
+        //appointment view logic
+        public function appointments(Officer $officer)
+        {
+            // Load the visitor appointments with officers
+            $appointments = $officer->appointmentsWithVisitor;
+
+            return view('officer.appointments', ['officer' => $officer, 'appointments' => $appointments]);
+        }
+
+        //handel the activation and deactivation with condition
+        public function handle(Officer $officer)
+        {
+            $action = request('action');
+
+            if ($action == 'activate') {
+                // Activate the visitor
+                $officer->update(['status' => 'active']);
+
+                // Activate related future appointments which are deactivated
+                $officer->appointments()
+                    ->where('status', 'inactive')
+                    ->whereDate('appointment_time', '>=', now())
+                    ->whereHas('visitor', function ($query) {
+                        $query->where('status', 'active');
+                    })
+                    ->update(['status' => 'active']);
+
+                $message = 'Officer activated successfully';
+            } elseif ($action == 'deactivate') {
+                // Deactivate the visitor
+                $officer->update(['status' => 'inactive']);
+
+                // Deactivate related future appointments
+                $officer->appointments()
+                    ->where('status', 'active')
+                    ->whereDate('appointment_time', '>=', now())
+                    ->update(['status' => 'inactive']);
+
+                $message = 'Officer deactivated successfully';
+            } else {
+                $message = 'Invalid action';
+            }
+
+            return redirect(route('officer.index'))->with('success', $message);
+
+        }
+
+
     ///function of validation
     private function validateOfficer(Request $request)
     {

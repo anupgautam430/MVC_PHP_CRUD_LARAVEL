@@ -8,12 +8,14 @@
 
 </head>
 <body>
-    <h1>this is a create view</h1>
-    <form method="post" action="{{route('post.store')}}" >
-        @csrf
-        @method('post')
-
-        <div>
+    <div class="container m-4">
+    <a class="btn btn-dark" href="javascript:history.go(-1)">Go Back</a>
+        <h1 class="text-center">Add a new Post</h1>
+        <form class="form-control" method="post" action="{{route('post.store')}}" >
+            @csrf
+            @method('post')
+            
+            <div>
             @if($errors->any())
                 <ul>
                     @foreach($errors->all() as $error)
@@ -22,21 +24,22 @@
                 </ul>
             @endif
         </div>
-        <div>
+        <div class="form-group">
             <label>Name</label>
-            <input type="text" name="name" placeholder="Enter Post">
+            <input class="form-control" type="text" name="name" placeholder="Enter Post">
         </div>
-        <div>
+        <div class="form-group">
             <label>status</label>
-            <select name="status" id="status">
+            <select name="status" id="status" class="form-control">
                 <option value="active">Active</option>
                 <option value="inactive">Inavtive</option>
             </select>
         </div>
-        <div>
-            <input type="submit" value="Add Post">
+        <div class="form-group">
+            <input class="btn btn-primary m-1" type="submit" value="Add Post">
         </div>
     </form>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>

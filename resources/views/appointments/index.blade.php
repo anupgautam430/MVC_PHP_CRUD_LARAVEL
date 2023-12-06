@@ -8,12 +8,12 @@
 </head>
 <body>
     <div class="container m-4">
-        <a class="btn btn-secondary" href="{{ url('/') }}">home</a>
+        <a class="btn btn-dark" href="{{ url('/') }}">Home</a>
     </div>
     <div class="container">
-        <h1>Apointments list</h1>
+        <h1 class="text-center">Apointments list</h1>
         <div>
-            <a class="btn btn-primary" href="{{route('appointments.create')}}">Add new post</a>
+            <a class="btn btn-primary" href="{{route('appointments.create')}}">Add New Appointment</a>
         </div>
         @if(session()->has('success'))
         <div>
@@ -33,7 +33,7 @@
             </tr>
             @foreach($appointments as $appoint)
             <tr>
-                <td class="text-center">{{$appoint->visitor->name}}</td>
+                <td class="text-center">{{$appoint->visitor->Name}}</td>
                 <td class="text-center">{{$appoint->officer->name}}</td>
                 <td class="text-center">{{$appoint->appointment_time}}</td>
                 <td class="text-center">{{$appoint->status}}</td>

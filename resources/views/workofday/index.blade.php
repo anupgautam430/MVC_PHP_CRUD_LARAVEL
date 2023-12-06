@@ -7,10 +7,12 @@
 
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center m-4">Work days in a week </h1>
+    <div class="container m-4">
+     <a class="btn btn-dark" href="{{ url('/') }}">home</a>
+
+        <h1 class="text-center">Work days of a officer in a week </h1>
         <div>
-            <a class="btn btn-primary" href="{{route('workofday.create')}}">Add new post</a>
+            <a class="btn btn-primary" href="{{route('workofday.create')}}">Add new data</a>
         </div>
         @if(session()->has('success'))
         <div>
@@ -24,7 +26,6 @@
                 <th>Officer Name</th>
                 <th>Work Day Of Week</th>
                 <th>Edit</th>
-                <th>Handel</th>
 
             </tr>
             @foreach($workday as $workd)
@@ -32,9 +33,8 @@
                 <td>{{$workd->officer->name}}</td>
                 <td>{{$workd->day_of_week}}</td>
                 <td>
-                    <a class="btn btn-secondary"href="{{route('workofday.edit', ['workofday' => $workd])}}">Edit</a>
+                    <a class="btn btn-dark" href="{{route('workofday.edit', ['workofday' => $workd])}}">Edit</a>
                 </td>
-                <td><a href="#">activate</a>|<a href="#">deactive</a></td>
             </tr>
             @endforeach
         </table>

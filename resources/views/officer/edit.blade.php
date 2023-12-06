@@ -8,57 +8,58 @@
 
 </head>
 <body>
-    <h1>this is a edit view of officer</h1>
-    <form method="post" action="{{route('officer.update', ['officer' => $officer])}}" >
-        @csrf
-        @method('put')
-
-        <div>
-            @if($errors->any())
+    <div class="container m-4 ">
+        <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
+        <h1 class="text-center">Edit officer info</h1>
+        <form  class="form-control" method="post" action="{{route('officer.update', ['officer' => $officer])}}" >
+            @csrf
+            @method('put')
+            
+            <div>
+                @if($errors->any())
                 <ul>
                     @foreach($errors->all() as $error)
                     <li>{{$error}}</li>
                     @endforeach
                 </ul>
-            @endif
-        </div>
-        <div>
-            <label>Name</label>
-            <input type="text" name="name" value="{{$officer->name}}">
-        </div>
-
-        <div class="form-group">
-            <label for="post_id">Post:</label>
-            <select name="post_id" id="post_id" class="form-control">
-                @foreach($post as $postId => $postName)
+                @endif
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input  class="form-control" type="text" name="name" value="{{$officer->name}}">
+            </div>
+            
+            <div class="form-group">
+                <label for="post_id">Post:</label>
+                <select name="post_id" id="post_id" class="form-control">
+                    @foreach($post as $postId => $postName)
                     <option value="{{ $postId }}">{{ $postName }}</option>
-                @endforeach
-            </select>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>status</label>
+                <select class="form-control" name="status" id="status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Work_start_time</label>
+                <input class="form-control" type="time" name="work_start_time" value="$officer->work_start_time">
+            </div>
+            <div class="form-group">
+                <label>Work_end_time</label>
+            <input class="form-control" type="time" name="work_end_time" value="$officer->work_end_time">
         </div>
-
-        <div>
-            <label>status</label>
-            <select name="status" id="status">
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-            </select>
-        </div>
-        <div>
-            <label>Work_start_time</label>
-            <input type="time" name="work_start_time" value="$officer->work_start_time">
-        </div>
-        <div>
-            <label>Work_end_time</label>
-            <input type="time" name="work_end_time" value="$officer->work_end_time">
-        </div>
-        <div>
-            <input type="submit" value="Update Officer">
-        </div>
-        <div>
-        <a href="{{ route('workofday.edit', ['workofday' => $officer->id]) }}">Edit workdays</a>
+        <div class="form-group m-1">
+            <input class="btn btn-primary" type="submit" value="Update Officer">
+            <a class="btn btn-info" href="{{ route('workofday.edit', ['workofday' => $officer->id]) }}">Edit workdays</a>
         </div>
     </form>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
+    
 </body>
 </html>

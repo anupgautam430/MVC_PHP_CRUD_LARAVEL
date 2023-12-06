@@ -8,39 +8,42 @@
 
 </head>
 <body>
-    <h1>Edit work of days in a week of officer</h1>
-    <form method="post" action="{{route('workofday.update', ['workofday' => $workofday->id])}}">
-        @csrf
-        @method('put')
-
-        <div>
-            @if($errors->any())
+    <div class="container m-4">
+        <a class="btn btn-dark" href="javascript: history.go(-1)">Back</a>
+        <h1 class="text-center">Edit work of days in a week of officer</h1>
+        <form class="form-control" method="post" action="{{route('workofday.update', ['workofday' => $workofday->id])}}">
+            @csrf
+            @method('put')
+            
+            <div>
+                @if($errors->any())
                 <ul>
                     @foreach($errors->all() as $error)
                     <li>{{$error}}</li>
                     @endforeach
                 </ul>
-            @endif
-        </div>
-
-        <div class="form-group">
-            <label for="officer_id">Post:</label>
-            <select name="officer_id" id="officer_id" class="form-control">
-                @foreach($officer as $workId => $workName)
+                @endif
+            </div>
+            
+            <div class="form-group">
+                <label for="officer_id">Officer:</label>
+                <select name="officer_id" id="officer_id" class="form-control">
+                    @foreach($officer as $workId => $workName)
                     <option value="{{ $workId }}">{{ $workName }}</option>
                 @endforeach
             </select>
         </div>
 
-        <div>
-            <label>Work </label>
-            <input type="text" name="day_of_week" value="{{$workofday->day_of_week}}">
+        <div class="form-group">
+            <label>Work Days: </label>
+            <input class="form-control" type="text" name="day_of_week" value="{{$workofday->day_of_week}}">
         </div>
-        <div>
-            <input type="submit" value="update Visitor">
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="update Visitor">
         </div>
     </form>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
+    
 </body>
 </html>

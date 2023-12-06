@@ -8,11 +8,11 @@
 
 </head>
 <body>
-    <div class="container">
-
+    <div class="container m-4">
+        <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
     
-    <h1>this is a create view of Activity</h1>
-    <form method="post" action="{{route('activity.store')}}">
+    <h1 class="text-center">this is a create view of Activity</h1>
+    <form class="form-control" method="post" action="{{route('activity.store')}}">
         @csrf
         @method('post')
 
@@ -45,23 +45,23 @@
             </select>
         </div>
 
-        <div>
+        <div class="form-group">
             <label>Name</label>
-            <input type="text" name="name" placeholder="Enter activity name">
+            <input class="form-control" type="text" name="name" placeholder="Enter activity name">
         </div>
 
-        <div>
+        <div class="form-group">
             <label>Type</label>
-            <select name="type" id="type">
+            <select  class="form-control" name="type" id="type">
                 <option value="leave">Leave</option>
                 <option value="appointment">Appointment</option>
                 <option value="break">break</option>
             </select>
         </div>
 
-        <div>
+        <div class="form-group">
             <label>status</label>
-            <select name="status" id="status">
+            <select class="form-control" name="status" id="status">
                 <option value="active">Active</option>
                 <option value="cancel">Cancelled</option>
                 <option value="deactivated">Deactivated</option>
@@ -69,25 +69,25 @@
             </select>
         </div>
 
-        <div>
+        <div class="form-group">
             <label>Date</label>
-            <input type="date" name="date" placeholder="Enter date">
+            <input class="form-control" type="date" name="date" placeholder="Enter date">
         </div>
         
-        <div>
+        <div class="form-group">
             <label>Start_time</label>
-            <input type="time" name="start_time" placeholder="start time">
+            <input class="form-control" type="time" name="start_time" placeholder="start time">
         </div>
-        <div>
+        <div class="form-group">
             <label>End_time</label>
-            <input type="time" name="end_time" placeholder="end time">
+            <input class="form-control" type="time" name="end_time" placeholder="end time">
         </div>
-        <div>
+        <div class="form-group">
             <label>Added_on</label>
-            <input type="date" name="added_on" placeholder="added date">
+            <input class="form-control" type="date" name="added_on" placeholder="added date">
         </div>
-        <div>
-            <input type="submit" value="Add Activity">
+        <div class="form-group m-1">
+            <input class=" form-control btn btn-primary" type="submit" value="Add Activity">
         </div>
     </form>
     </div>

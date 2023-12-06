@@ -8,20 +8,22 @@
 
 </head>
 <body>
-    <div class="container">
-        <div class="container m-4">
-            <a class="btn btn-secondary" href="{{ url('/') }}">home</a>
-        </div>
+    <div class="container m-4">
+        <a class="btn btn-dark" href="{{ url('/') }}">home</a>
         <h1 class="text-center">Post</h1>
         <div>
             <a class="btn btn-primary" href="{{route('post.create')}}">Add new post</a>
         </div>
         @if(session()->has('success'))
-        <div>
-            {{session('success')}}
-        </div>
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-
+        @if(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
         @endif
         <table class="table">
             <tr class="text-center">
