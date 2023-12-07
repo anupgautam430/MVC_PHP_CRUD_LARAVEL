@@ -54,43 +54,43 @@ class OfficerController extends Controller
             return view('officer.appointments', ['officer' => $officer, 'appointments' => $appointments]);
         }
 
-        //handel the activation and deactivation with condition
+        //handel the activation and deactivation with condition of officer where appointment also affected
         public function handle(Officer $officer)
         {
             $action = request('action');
 
-            if ($action == 'activate') {
+            if ($action == 'Activate') {
                 // Activate the visitor
-                $officer->update(['status' => 'active']);
+                $officer->update(['status' => 'Active']);
 
                 // Activate related future appointments which are deactivated
                 $officer->appointments()
-                    ->where('status', 'inactive')
+                    ->where('status', 'Inactive')
                     ->whereDate('appointment_time', '>=', now())
                     ->whereHas('visitor', function ($query) {
-                        $query->where('status', 'active');
+                        $query->where('Status', 'active');
                     })
-                    ->update(['status' => 'active']);
+                    ->update(['status' => 'Active']);
 
-                $message = 'Officer activated successfully';
-            } elseif ($action == 'deactivate') {
+                $message = 'Officer Activated successfully';
+            } elseif ($action == 'Deactivate') {
                 // Deactivate the visitor
-                $officer->update(['status' => 'inactive']);
+                $officer->update(['status' => 'Inactive']);
 
                 // Deactivate related future appointments
                 $officer->appointments()
-                    ->where('status', 'active')
+                    ->where('status', 'Active')
                     ->whereDate('appointment_time', '>=', now())
-                    ->update(['status' => 'inactive']);
+                    ->update(['status' => 'Inactive']);
 
-                $message = 'Officer deactivated successfully';
+                $message = 'Officer Deactivated successfully';
             } else {
                 $message = 'Invalid action';
             }
 
             return redirect(route('officer.index'))->with('success', $message);
-
         }
+
 
 
     ///function of validation

@@ -61,7 +61,7 @@ class VisitorController extends Controller
             return view('visitor.appointments', ['visitor' => $visitor, 'appointments' => $appointments]);
         }
 
-         // Activate or deactivate a visitor and related appointments
+         // Activate or deactivate a visitor and related appointments(3.a: visitor appointment handling)
         public function handle(Visitor $visitor)
         {
             $action = request('action');

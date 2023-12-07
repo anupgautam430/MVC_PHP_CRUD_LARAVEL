@@ -49,7 +49,7 @@ class PostController extends Controller
         return redirect(route('post.index'))->with('success', 'Post updated successfully');
     }
 
-    //handle the activate and deactivate
+    //handle the activate and deactivate (2.a: If any Officer of given post is active, user should not be able to deactivate the Post.)
     public function handle(Post $post)
     {
         // Check if any active officer is associated with the post

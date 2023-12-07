@@ -67,6 +67,8 @@ Route::get('/activity/create', [ActivityController::class, 'create'])->name('act
 Route::post('/activity', [ActivityController::class, 'store'])->name('activity.store');
 Route::get('/activity/{activity}/edit', [ActivityController::class, 'edit'])->name('activity.edit');
 Route::put('/activity/{activity}', [ActivityController::class, 'update'])->name('activity.update');
+Route::put('/activities/{activity}/cancel', [ActivityController::class, 'cancel'])->name('activity.cancel');
+
 
 
 //route for Appointment

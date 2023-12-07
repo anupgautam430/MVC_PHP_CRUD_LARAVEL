@@ -27,7 +27,7 @@
         <table class="table">
             <tr class="text-center">
                 <th>Name</th>
-                <th>Mpbile_no</th>
+                <th>Mobile_no</th>
                 <th>Email_Address</th>
                 <th>Status</th>
                 <th>Edit</th>
@@ -35,15 +35,15 @@
             </tr>
             @foreach($visitor as $visit)
             <tr class="text-center">
-                <th>{{$visit->Name}}</th>
-                <th>{{$visit->Mobile_no}}</th>
-                <th>{{$visit->Email_Address}}</th>
-                <th>{{$visit->Status}}</th>
-                <th>
-                    <a class="btn btn-dark" href="{{route('visitor.edit', ['visitor' => $visit])}}">Edit</a>|
+                <td>{{$visit->Name}}</td>
+                <td>{{$visit->Mobile_no}}</td>
+                <td>{{$visit->Email_Address}}</td>
+                <td>{{$visit->Status}}</td>
+                <td>
+                    <a class="btn btn-dark" href="{{route('visitor.edit', ['visitor' => $visit])}}">Edit</a>
                     <a class="btn btn-info" href="{{ route('visitor.appointments', ['visitor' => $visit]) }}" class="btn btn-info">View Appointments</a>
 
-                </th>
+                </td>
                 <td>
                     <form action="{{ route('visitor.handle', ['visitor' => $visit]) }}" method="post">
                      @csrf

@@ -46,11 +46,12 @@
                     <a class="btn btn-info" href="{{ route('officer.appointments', ['officer' => $office]) }}" class="btn btn-info">View Appointments</a>
                 </td>
                 <td><form action="{{ route('officer.handle', ['officer' => $office]) }}" method="post">
-                     @csrf
-                            <button class="btn btn-danger" type="submit" name="action" value="{{ $office->status == 'active' ? 'deactivate' : 'activate' }}">
-                             {{ $office->Status == 'active' ? 'Deactivate' : 'Activate' }}
-                             </button>
-                    </form></td>
+                        @csrf
+                        <button class="btn btn-danger" type="submit" name="action" value="{{ $office->status == 'Active' ? 'Deactivate' : 'Activate' }}">
+                            {{ $office->status == 'Active' ? 'Deactivate' : 'Activate' }}
+                        </button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </table>

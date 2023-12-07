@@ -9,9 +9,23 @@ use App\Models\Visitor;
 
 class ActivityController extends Controller
 {
-    public function index(){
-        $activity = Activity::all();
-        return view('activity.index',['activity'=> $activity]);
+    public function index(Request $request)
+    {
+        $search = $request->input('search');//for search
+        $searchBy = $request->input('search_by'); //for type of data from table to search
+
+        $query = Activity::query();
+        if ($search && $searchBy) {
+            $query->where($searchBy, 'like', "%$search%");
+        }
+
+        $activities = $query->get();
+
+        return view('activity.index', [
+            'activity' => $activities,
+            'search' => $search,
+            'searchBy' => $searchBy, 
+        ]);
     }
 
     public function create()
@@ -77,33 +91,33 @@ class ActivityController extends Controller
 
             //dd($officer, $visitor, $data);
 
-            // b. If officer is deactivated, user can’t add any activity for that officer
+            //5 b: If officer is deactivated, user can’t add any activity for that officer
             if ($officer && $officer->status == 'inactive') {
                 return false;
             }
 
-            // c. If visitor is deactivated, user can’t add any activity for that visitor
+            //5 c: If visitor is deactivated, user can’t add any activity for that visitor
             if ($visitor && $visitor->status == 'inactive') {
                 return false;
             }
 
-            // d. If officer is on break, leave, or busy on the chosen date and time, user can’t add activity
+            // 5 d: If officer is on break, leave, or busy on the chosen date and time, user can’t add activity
             if ($officer && $this->isOfficerUnavailable($officer, $data['date'], $data['start_time'], $existingActivity)) {
                 return false;
             }
 
-            // e. If visitor has another active appointment on the chosen date and time, user can’t add appointment
+            //5 e: If visitor has another active appointment on the chosen date and time, user can’t add appointment
             if ($visitor && $data['type'] == 'appointment' && $this->hasVisitorAnotherActiveAppointment($visitor, $data['date'], $data['start_time'], $existingActivity)) {
                 return false;
             }
 
-            // g. User should only be able to add activity if it falls between officer’s work start and end time, and in work days
+            // 5 g: User should only be able to add activity if it falls between officer’s work start and end time, and in work days
             if ($officer && !$this->isActivityWithinOfficerWorkSchedule($officer, $data['start_time'], $data['end_time'])) {
                 return false;
             }
             
 
-            // i. User should not be able to add activity for the past.
+            // 5 i: User should not be able to add activity for the past.
             if (!$this->isActivityInFuture($data['date'], $data['start_time'])) {
                 return false;
             }
@@ -165,17 +179,18 @@ class ActivityController extends Controller
             $activityDateTime = strtotime("$date $startTime");
 
             return ($activityDateTime > time());
-        }
-
-
-        ///5
-        private function isActivityInWorkDays($officer, $date)
+        }   
+        
+        //cancel the status
+        public function cancel(Activity $activity)
         {
-            // logic to check if the activity falls on officer's work days
-            $dayOfWeek = date('N', strtotime($date)); // 1 (Monday) to 7 (Sunday)
+            $newStatus = $activity->status == 'Cancelled' ? 'Active' : 'Cancelled';
+            
+            $activity->update(['status' => $newStatus]);
 
-            return in_array($dayOfWeek, json_decode($officer->work_days));
+            $action = $newStatus == 'Cancelled' ? 'Cancelled' : 'Activate';
+            $message = "Activity $action successfully";
+
+            return redirect(route('activity.index'))->with('success', $message);
         }
-
-    
 }

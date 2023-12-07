@@ -24,6 +24,18 @@
                 {{ session('error') }}
             </div>
         @endif
+        <form method="GET" action="{{ route('activity.index') }}" class="mb-3">
+    <div class="input-group">
+        <select name="search_by" class="form-select">
+            <option value="name" {{ $searchBy === 'name' ? 'selected' : '' }}>Name</option>
+            <option value="type" {{ $searchBy === 'type' ? 'selected' : '' }}>Type</option>
+            <option value="status" {{ $searchBy === 'status' ? 'selected' : '' }}>Status</option>
+            <option value="Date" {{ $searchBy === 'Date' ? 'selected' : '' }}>Date</option>
+        </select>
+        <input type="text" name="search" class="form-control" placeholder="Search" value="{{ $search }}">
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+    </div>
+</form>
         <table class="table">
             <tr>
                 <th>Officer</th>
@@ -45,7 +57,7 @@
 
                 <td>{{$active->name}}</td>
                 <td>{{$active->type}}</td>
-                <td>{{$active->status}}</td>
+                <td>{{ $active->status}}</td>
                 <td>{{$active->date}}</td>
                 <td>{{$active->start_time}}</td>
                 <td>{{$active->end_time}}</td>
@@ -53,7 +65,13 @@
                 <td>
                     <a class="btn btn-dark" href="{{route('activity.edit', ['activity' => $active])}}">Edit</a>
                 </td>
-                <td><a href="#">activate</a>|<a href="#">deactive</a></td>
+                <td><form action="{{ route('activity.cancel', ['activity' => $active]) }}" method="post">
+                @csrf
+                @method('PUT')
+                <button type="submit" class="btn btn-danger">
+                    {{ $active->status == 'Cancelled' ? 'Activate' : 'Cancel' }}
+                </button>
+            </form></td>
             </tr>
             @endforeach
         </table>
