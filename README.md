@@ -1,3 +1,23 @@
+
+## Setup Instructions
+
+1. Clone the repository.
+2. Install dependencies: `composer install` and `npm install`.
+3. Copy the `.env.example` file to `.env` and configure the database settings.
+4. Install Xampp and start `mysql` and `apache` server.
+5. Generate application key: `php artisan key:generate`.
+6. Run migrations: `php artisan migrate`.
+   -**Important:** Before running migrations, ensure that the database exists on the new system and the credentials in the .env file are correct.
+-  -If the database already exists, running migrations may overwrite existing tables, so be cautious.
+8. Start the development server: `php artisan serve`.
+
+## Environment Variables
+
+- `DB_CONNECTION`: mysql
+- `DB_DATABASE`: mvc_php_crud
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
