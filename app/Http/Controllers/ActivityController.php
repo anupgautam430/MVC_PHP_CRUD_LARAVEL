@@ -41,7 +41,6 @@ class ActivityController extends Controller
     {
         $data = $this->validateActivity($request);
 
-        // Check conditions before creating activity
         if ($this->checkConditionsForActivity($data)) {
             $newActivity = Activity::create($data);
             return redirect(route('activity.index'))->with('success', 'Activity created successfully');
@@ -61,11 +60,15 @@ class ActivityController extends Controller
         //update
         public function update(Activity $activity, Request $request){
             $data = $this->validateActivity($request);
-
-            $activity->update($data);
-
-            return redirect(route('activity.index'))->with('success', 'Work day updated successfully');
+        
+            if ($this->checkConditionsForActivity($data)) {
+                $newActivity = $activity->update($data);
+                return redirect(route('activity.index'))->with('success', 'Activity updated successfully');
+            } else {
+                return redirect(route('activity.index'))->with('error', 'Cannot update activity. Check conditions');
+            }
         }
+        
 
 
         //validation function
@@ -83,7 +86,7 @@ class ActivityController extends Controller
             ]);
         }
 
-        // Additional conditions check for activity
+        // conditions check for activity
         private function checkConditionsForActivity($data, $existingActivity = null)
         {
             $officer = Officer::find($data['officer_id']);

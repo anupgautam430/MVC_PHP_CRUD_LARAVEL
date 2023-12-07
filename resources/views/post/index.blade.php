@@ -34,11 +34,11 @@
             </tr>
             @foreach($post as $pro)
             <tr class="text-center">
-                <th>{{$pro->name}}</th>
-                <th>{{$pro->status}}</th>
-                <th>
+                <td>{{$pro->name}}</td>
+                <td>{{$pro->status}}</td>
+                <td>
                     <a class="btn btn-dark" href="{{route('post.edit', ['post' => $pro])}}">Edit</a>
-                </th>
+                </td>
                 <td><form action="{{ route('post.handle', ['post' => $pro]) }}" method="POST">
                     @csrf
                     @method('post')

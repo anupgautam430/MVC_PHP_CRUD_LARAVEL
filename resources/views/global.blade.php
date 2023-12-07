@@ -12,7 +12,7 @@
     </style>
 </head>
 <body>
-<div class="container m-4">
+<div class="container m-4 mx-auto">
     <ul class="nav flex-column nav-pills gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
         <li class="nav-item" role="presentation">
             <a class="nav-link active rounded-5 text-center text-dark" id="post-tab" href="{{ route('post.index') }}">POST</a>
