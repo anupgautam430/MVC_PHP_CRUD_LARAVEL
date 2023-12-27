@@ -4,7 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activity index</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    <style>
+        body{
+            background: lightblue;
+        }
+    </style>
 </head>
 <body>
     <div class="container m-4">
@@ -38,24 +42,23 @@
 </form>
         <table class="table">
             <tr>
-                <th>Officer</th>
-                <th>Visitor</th>
                 <th>Name</th>
+                <th>Visitor</th>
+                <th>Officer</th>
                 <th>Type</th>
                 <th>Status</th>
                 <th>Date</th>
-                <th>Start_time</th>
-                <th>End_time</th>
-                <th>Added_on</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Added On</th>
                 <th>Edit</th>
-                <th>Handel</th>
+                <th>Action</th>
             </tr>
             @foreach($activity as $active)
             <tr>
-                <td>{{$active->officer->name}}</td>
-                <td>{{$active->visitor->Name}}</td>
-
                 <td>{{$active->name}}</td>
+                <td>{{$active->visitor->Name}}</td>
+                <td>{{$active->officer->name}}</td>
                 <td>{{$active->type}}</td>
                 <td>{{ $active->status}}</td>
                 <td>{{$active->date}}</td>
@@ -68,7 +71,7 @@
                 <td><form action="{{ route('activity.cancel', ['activity' => $active]) }}" method="post">
                 @csrf
                 @method('PUT')
-                <button type="submit" class="btn btn-danger">
+                <button type="submit" class="btn {{$active->status=='Active'  ?  'btn-danger' : 'btn-success'}}">
                     {{ $active->status == 'Cancelled' ? 'Activate' : 'Cancel' }}
                 </button>
             </form></td>

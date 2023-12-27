@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create post</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    <style>
+        body{
+            background: lightblue;
+        }
+    </style>
 </head>
 <body>
     <div class="container m-4">
-       <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
+    <a class="btn btn-dark" href="{{url('/')}}">Home</a> <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
         <h1>Edit visitors info</h1>
         <form class="form-control" method="post" action="{{route('visitor.update', ['visitor' => $visitor])}}" >
             @csrf
@@ -38,7 +42,7 @@
         </div>
         <div class="form-group">
             <label>status</label>
-            <select class="form-control" name="Status" id="Status">
+            <select class="form-select" name="Status" id="Status">
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
             </select>

@@ -32,8 +32,8 @@ class OfficerController extends Controller
 
     public function edit(Officer $officer)
         {
-            $post = Post::pluck('name', 'id');
-            $workday=WorkDays::pluck('officer_id','day_of_week');
+            $post = Post::pluck('name','id');
+            $workday = WorkDays::pluck('officer_id','day_of_week');
             return view('officer.edit', ['officer'=> $officer],compact('post','workday'));
         }
 
@@ -54,7 +54,7 @@ class OfficerController extends Controller
             return view('officer.appointments', ['officer' => $officer, 'appointments' => $appointments]);
         }
 
-        //handel the activation and deactivation with condition of officer where appointment also affected
+        //handle the activation and deactivation with condition of officer where appointment also affected
         public function handle(Officer $officer)
         {
             $action = request('action');

@@ -15,6 +15,7 @@ class ActivityController extends Controller
         $searchBy = $request->input('search_by'); //for type of data from table to search
 
         $query = Activity::query();
+
         if ($search && $searchBy) {
             $query->where($searchBy, 'like', "%$search%");
         }
@@ -36,20 +37,33 @@ class ActivityController extends Controller
         return view('activity.create', compact('officer','visitor'));
     }
 
-    //storing workofday
     public function store(Request $request)
     {
-        $data = $this->validateActivity($request);
+        $data = $request->validate([
+            'officer_id' => 'required|exists:officers,id',
+            'visitor_id' => 'nullable|exists:visitors,id',
+            'name' => 'required|string|max:255',
+            'type' => ['required', 'in:appointment'],
+            'status' => ['required', 'in:active'],
+            'date' => 'required|date|after_or_equal:today',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+        ]);
 
-        if ($this->checkConditionsForActivity($data)) {
+        $conditionsCheck = $this->checkConditionsForActivity($data);
+
+        //dd($conditionsCheck);
+
+        if ($conditionsCheck === true) {
             $newActivity = Activity::create($data);
             return redirect(route('activity.index'))->with('success', 'Activity created successfully');
         } else {
-            return redirect(route('activity.index'))->with('error', 'Cannot add activity. Check conditions.');
+            return $conditionsCheck; 
         }
     }
 
-     //accessing data in edit view
+
+    //accessing data in edit view
     public function edit(Activity $activity)
     {
         $officer = Officer::pluck('name', 'id');
@@ -59,83 +73,70 @@ class ActivityController extends Controller
 
         //update
         public function update(Activity $activity, Request $request){
-            $data = $this->validateActivity($request);
+            $data = $request->validate([
+                'name' => 'required|string|max:255',
+            ]);
+            // $conditionsCheck = $this->checkConditionsForActivity($data);
         
-            if ($this->checkConditionsForActivity($data)) {
-                $newActivity = $activity->update($data);
+                $activity->update($data);
                 return redirect(route('activity.index'))->with('success', 'Activity updated successfully');
-            } else {
-                return redirect(route('activity.index'))->with('error', 'Cannot update activity. Check conditions');
-            }
         }
         
 
 
         //validation function
-        private function validateActivity(Request $request)
-        {
-            return $request->validate([
-                'officer_id' => 'required|exists:officers,id',
-                'visitor_id' => 'nullable|exists:visitors,id',
-                'name' => 'required|string|max:255',
-                'type' => ['required', 'in:appointment'],
-                'status' => ['required', 'in:active'],
-                'date' => 'required|date',
-                'start_time' => 'required|date_format:H:i',
-                'end_time' => 'required|date_format:H:i|after:start_time',
-            ]);
-        }
+        // private function validateActivity(Request $request)
+        // {
+        //     return $request->validate([
+        //         'officer_id' => 'required|exists:officers,id',
+        //         'visitor_id' => 'nullable|exists:visitors,id',
+        //         'name' => 'required|string|max:255',
+        //         'type' => ['required', 'in:appointment'],
+        //         'status' => ['required', 'in:active'],
+        //         'date' => 'required|date|after_or_equal:today',
+        //         'start_time' => 'required|date_format:H:i',
+        //         'end_time' => 'required|date_format:H:i|after:start_time',
+        //     ]);
+        // }
 
         // conditions check for activity
         private function checkConditionsForActivity($data, $existingActivity = null)
         {
             $officer = Officer::find($data['officer_id']);
             $visitor = Visitor::find($data['visitor_id']);
-
-            //dd($officer, $visitor, $data);
-
-            //5 b: If officer is deactivated, user can’t add any activity for that officer
-            if ($officer && $officer->status == 'inactive') {
-                return false;
+        
+            if ($visitor && $visitor->Status != 'active') {
+                return redirect()->route('activity.create')->with('error', 'Cannot create appointment for inactive visitor.');
             }
-
-            //5 c: If visitor is deactivated, user can’t add any activity for that visitor
-            if ($visitor && $visitor->status == 'inactive') {
-                return false;
+        
+            if ($officer && $officer->status != 'Active') {
+                return redirect()->route('activity.create')->with('error', 'Cannot create appointment for inactive officer.');
             }
-
-            // 5 d: If officer is on break, leave, or busy on the chosen date and time, user can’t add activity
+        
             if ($officer && $this->isOfficerUnavailable($officer, $data['date'], $data['start_time'], $existingActivity)) {
-                return false;
+                return redirect()->route('activity.create')->with('error', 'Officer is not available in this date.');
             }
-
-            //5 e: If visitor has another active appointment on the chosen date and time, user can’t add appointment
+        
             if ($visitor && $data['type'] == 'appointment' && $this->hasVisitorAnotherActiveAppointment($visitor, $data['date'], $data['start_time'], $existingActivity)) {
-                return false;
+                return redirect()->route('activity.create')->with('error', 'Visitor has another appointment in this date.');
             }
-
-            // 5 g: User should only be able to add activity if it falls between officer’s work start and end time, and in work days
+        
             if ($officer && !$this->isActivityWithinOfficerWorkSchedule($officer, $data['start_time'], $data['end_time'])) {
-                return false;
+                return redirect()->route('activity.create')->with('error', 'Activity is not in officer work schedule.');
             }
-            
-
-            // 5 i: User should not be able to add activity for the past.
-            if (!$this->isActivityInFuture($data['date'], $data['start_time'])) {
-                return false;
-            }
-
+        
+            // if (!$this->isActivityInFuture($data['date'], $data['start_time'])) {
+            //     return redirect()->route('activity.create')->with('error', 'Cannot add activity for the past.');
+            // }
+        
             return true;
         }
-
-
-    /////1
+        
+        
         private function isOfficerUnavailable($officer, $date, $startTime, $existingActivity = null)
         {
-            //logic to check if officer is on break, leave, or busy on the chosen date and time
             $activityDateTime = strtotime("$date $startTime");
 
-            // Check if officer has any existing activity at the same date and time
             if ($existingActivity && $existingActivity->officer_id === $officer->id) {
                 return false; 
             }
@@ -148,10 +149,8 @@ class ActivityController extends Controller
         ///2
         private function hasVisitorAnotherActiveAppointment($visitor, $date, $startTime, $existingActivity = null)
         {
-            //logic to check if the visitor has another active appointment on the chosen date and time
             $activityDateTime = strtotime("$date $startTime");
 
-            // Check if visitor has any existing active appointment at the same date and time
             if ($existingActivity && $existingActivity->visitor_id === $visitor->id) {
                 return false; 
             }
@@ -161,28 +160,24 @@ class ActivityController extends Controller
         //3
         private function isActivityWithinOfficerWorkSchedule($officer, $startTime, $endTime)
         {
-            // Convert input date and times to timestamps
             $activityStartTimestamp = strtotime("$officer $startTime");
             $activityEndTimestamp = strtotime("$officer $endTime");
 
-            // Convert officer's work start and end times to timestamps
             $workStartTimestamp = strtotime($officer->start_time);
             $workEndTimestamp = strtotime($officer->end_time);
 
-            // Check if the activity falls within officer's work start and end time
             $isWithinWorkTime = ($activityStartTimestamp >= $workStartTimestamp && $activityEndTimestamp <= $workEndTimestamp);
 
             return $isWithinWorkTime;
         }
 
         ///4
-        private function isActivityInFuture($date, $startTime)
-        {
-            // logic to check if the activity is in the future
-            $activityDateTime = strtotime("$date $startTime");
+        // private function isActivityInFuture($date, $startTime)
+        // {
+        //     $activityDateTime = strtotime("$date $startTime");
 
-            return ($activityDateTime > time());
-        }   
+        //     return ($activityDateTime > time());
+        // }   
         
         //cancel the status
         public function cancel(Activity $activity)

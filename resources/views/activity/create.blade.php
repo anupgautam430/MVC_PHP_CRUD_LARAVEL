@@ -5,31 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Activity</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    <style>
+        body{
+            background: lightblue;
+        }
+    </style>
 </head>
 <body>
     <div class="container m-4">
-        <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
+        <a class="btn btn-dark" href="{{url('/')}}">Home</a> <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a> 
     
-    <h1 class="text-center">this is a create view of Activity</h1>
+    <h1 class="text-center">Create new Activity</h1>
     <form class="form-control" method="post" action="{{route('activity.store')}}">
         @csrf
         @method('post')
 
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
         <div>
-            @if($errors->any())
-                <ul>
-                    @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                    @endforeach
-                </ul>
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
             @endif
         </div>
+
         
 
         <div class="form-group">
             <label for="officer_id">Officer:</label>
-            <select name="officer_id" id="officer_id" class="form-control">
+            <select name="officer_id" id="officer_id" class="form-select">
                 @foreach($officer as $officerId => $officerName)
                     <option value="{{ $officerId }}">{{ $officerName }}</option>
                 @endforeach
@@ -38,7 +51,7 @@
 
         <div class="form-group">
             <label for="visitor_id">Visitor:</label>
-            <select name="visitor_id" id="visitor_id" class="form-control">
+            <select name="visitor_id" id="visitor_id" class="form-select">
                 @foreach($visitor as $visitorId => $visitorName)
                     <option value="{{ $visitorId }}">{{ $visitorName }}</option>
                 @endforeach
@@ -52,7 +65,7 @@
 
         <div class="form-group">
             <label>Type</label>
-            <select  class="form-control" name="type" id="type">
+            <select  class="form-select" name="type" id="type">
                 <option value="leave">Leave</option>
                 <option value="appointment">Appointment</option>
                 <option value="break">break</option>
@@ -61,7 +74,7 @@
 
         <div class="form-group">
             <label>status</label>
-            <select class="form-control" name="status" id="status">
+            <select class="form-select" name="status" id="status">
                 <option value="active">Active</option>
                 <option value="cancel">Cancelled</option>
                 <option value="deactivated">Deactivated</option>
@@ -84,7 +97,7 @@
         </div>
         <div class="form-group">
             <label>Added_on</label>
-            <input class="form-control" type="date" name="added_on" placeholder="added date">
+            <input class="form-control" type="date" name="added_on" value="{{ now()->format('Y-m-d') }}" readonly>
         </div>
         <div class="form-group m-1">
             <input class=" form-control btn btn-primary" type="submit" value="Add Activity">

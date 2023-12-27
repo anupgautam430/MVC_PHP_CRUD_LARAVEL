@@ -4,14 +4,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Officer index</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    <style>
+        body{
+            background: lightblue;
+        }
+    </style>
 </head>
 <body>
     <div class="container m-4">
     <a class="btn btn-dark" href="{{ url('/') }}">home</a>
         <h1 class="text-center">Officer Information</h1>
         <div>
-            <a class="btn  btn-primary" href="{{route('officer.create')}}">Add new post</a>
+            <a class="btn  btn-primary" href="{{route('officer.create')}}">Add new officer</a>
         </div>
         @if(session()->has('success'))
             <div class="alert alert-success">
@@ -28,11 +32,11 @@
             <tr class="text-center">
                 <th>Name</th>
                 <th>Post</th>
-                <th>Work_Start</th>
-                <th>Work_End</th>
+                <th>Work Start Time</th>
+                <th>Work End Time</th>
                 <th>Status</th>
                 <th>Edit</th>
-                <th>Handel</th>
+                <th>Action</th>
             </tr>
             @foreach($officer as $office)
             <tr class="text-center">
@@ -47,7 +51,7 @@
                 </td>
                 <td><form action="{{ route('officer.handle', ['officer' => $office]) }}" method="post">
                         @csrf
-                        <button class="btn btn-danger" type="submit" name="action" value="{{ $office->status == 'Active' ? 'Deactivate' : 'Activate' }}">
+                        <button class="btn {{$office->status== 'Active' ?  'btn-danger' : 'btn-success'}}" type="submit" name="action" value="{{ $office->status == 'Active' ? 'Deactivate' : 'Activate' }}">
                             {{ $office->status == 'Active' ? 'Deactivate' : 'Activate' }}
                         </button>
                     </form>

@@ -20,7 +20,7 @@ use App\Http\Controllers\AppointmentController;
 */
 
 Route::get('/', function () {
-    return view('global');
+    return view('layout/global');
 });
 
 Route::get('/post',[PostController::class,'index'])->name('post.index');

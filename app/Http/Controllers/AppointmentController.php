@@ -25,14 +25,27 @@ class AppointmentController extends Controller
 
     public function store(Request $request)
     {
+        
         $request->validate([
             'visitor_id' => 'required',
             'officer_id' => 'required',
-            'appointment_time' => 'required|date',
+            'appointment_time' => 'required|date|after_or_equal:today',
         ]);
+       
+
+        $visitor = Visitor::find($request->input('visitor_id'));
+        $officer = Officer::find($request->input('officer_id'));
+
+        if ($visitor->Status != 'active') {
+            return redirect()->route('appointments.create')->with('error', 'Cannot create appointment for inactive visitor.');
+        }
+        
+        if ($officer->status != 'Active') {
+            return redirect()->route('appointments.create')->with('error', 'Cannot create appointment for inactive officer.');
+        }
 
         Appointment::create($request->all());
 
-        return redirect()->route('appointments.create')->with('success', 'Appointment created successfully.');
+        return redirect()->route('appointments.index')->with('success', 'Appointment created successfully.');
     }
 }

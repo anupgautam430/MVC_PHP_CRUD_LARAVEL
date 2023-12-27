@@ -25,7 +25,7 @@ class Officer extends Model
     //this is for the connection with workofdays table
     public function workDays()
     {
-        return $this->hasMany(WorkDays::class, 'officer_id');
+        return $this->hasMany(WorkDays::class);
     }
 
     public function appointmentsWithVisitor()
