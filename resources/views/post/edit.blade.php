@@ -5,25 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create post</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    <style>
+        body{
+            background: lightblue;
+        }
+    </style>
 </head>
 <body>
     <div class="container m-4">
     <a class="btn btn-dark" href="{{url('/')}}">Home</a> <a class="btn btn-dark" href="javascript:history.go(-1)">Go Back</a>
+    </div>
+    <div class="container">
         <h1 class="text-center">Edit the data</h1>
         <form class="form-control" method="POST" action="{{route('posts.update', ['post' => $post])}}">
             @csrf
             @method('PUT')
 
-            <div>
-                @if($errors->any())
+            @if($errors->any())
+                <div class="alert alert-danger">
                     <ul>
                         @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
+                            <li>{{$error}}</li>
                         @endforeach
                     </ul>
-                @endif
-            </div>
+                </div>
+            @endif
             <div class="form-group">
                 <label>Name</label>
                 <input class="form-control" type="text" name="name" value="{{$post->name}}">

@@ -34,8 +34,13 @@ class Officer extends Model
     }
 
     //accessing appointment table
-    public function appointments()
+    public function activities()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function activity()
+    {
+        return $this->belongsTo(Activity::class, 'ActivityId', 'officer_id');
     }
 }

@@ -13,35 +13,36 @@
 </head>
 <body>
     <div class="container m-4">
-    <a class="btn btn-dark" href="{{url('/')}}">Home</a> <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a> 
+    <a class="btn btn-dark" href="{{url('/')}}">Home</a> <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
         <h1 class="text-center">Create New Officer</h1>
         <form class="form-control" method="post" action="{{route('officer.store')}}">
             @csrf
             @method('post')
-            
-            <div>
-                @if($errors->any())
-                <ul>
-                    @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                    @endforeach
-                </ul>
-                @endif
-            </div>
+
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="form-group">
                 <label>Name</label>
-                <input class="form-control" type="text" name="name" placeholder="Enter Post">
+                <input class="form-control" type="text" name="name" placeholder="Enter Officer name">
             </div>
-            
+
             <div class="form-group">
                 <label for="post_id">Post:</label>
                 <select name="post_id" id="post_id" class="form-select">
+                    <option value="#">--Select Post--</option>
                     @foreach($post as $postId => $postName)
                     <option value="{{ $postId }}">{{ $postName }}</option>
                     @endforeach
                 </select>
             </div>
-            
+
             <div class="form-group">
                 <label>status</label>
                 <select class="form-select" name="status" id="status">
@@ -58,11 +59,11 @@
                 <input  class="form-control" type="time" name="work_end_time" placeholder="start time">
             </div>
             <div class="form-group m-1">
-                <input class="form-control btn btn-primary" type="submit" value="Add Visitor">
+                <input class="form-control btn btn-primary" type="submit" value="Add Officer">
             </div>
         </form>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </div>
-        
+
     </body>
     </html>

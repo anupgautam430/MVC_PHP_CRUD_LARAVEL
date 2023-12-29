@@ -14,11 +14,12 @@
 <body>
     <div class="container m-4">
     <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
-
-    @if($appointments->isEmpty())
+    </div>
+    <div class="container">
+    @if($activities->isEmpty())
         <h1 class="lead text-center">No appointments found.</h1>
     @else
-    
+
     <h1>Appointments of: {{ $officer->name }}</h1>
 
     <table class="table">
@@ -26,14 +27,16 @@
             <th>Visitor</th>
             <th>Officer Status</th>
             <th>Visitor Status</th>
-            <th>Appointment Time</th>
+            <th>Appointment date</th>
+            <th>Appointment Status</th>
         </tr>
-        @foreach($appointments as $appointment)
+        @foreach($activities as $appointment)
             <tr class="text-center">
                 <td>{{ $appointment->visitor->Name }}</td>
                 <td>{{ $appointment->officer->status }}</td>
                 <td>{{ $appointment->visitor->Status }}</td>
-                <td>{{ $appointment->appointment_time }}</td>
+                <td>{{ $appointment->date }}</td>
+                <td>{{$appointment->status}}</td>
             </tr>
         @endforeach
     </table>

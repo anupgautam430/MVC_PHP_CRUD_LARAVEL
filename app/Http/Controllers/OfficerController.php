@@ -23,11 +23,11 @@ class OfficerController extends Controller
     //store the officer details in database
     public function store(Request $request)
     {
-        
+
         $data = $this->validateOfficer($request);
 
         $newOfficer = Officer::create($data);
-        return redirect(route('officer.index'));       
+        return redirect(route('officer.index'));
     }
 
     public function edit(Officer $officer)
@@ -46,12 +46,12 @@ class OfficerController extends Controller
         }
 
         //appointment view logic
-        public function appointments(Officer $officer)
+        public function activity(Officer $officer)
         {
-            // Load the visitor appointments with officers
-            $appointments = $officer->appointmentsWithVisitor;
+            // Load the visitor activities with officers
+            $activities = $officer->appointmentsWithVisitor;
 
-            return view('officer.appointments', ['officer' => $officer, 'appointments' => $appointments]);
+            return view('officer.appointments', ['officer' => $officer, 'activities' => $activities]);
         }
 
         //handle the activation and deactivation with condition of officer where appointment also affected
@@ -63,10 +63,10 @@ class OfficerController extends Controller
                 // Activate the visitor
                 $officer->update(['status' => 'Active']);
 
-                // Activate related future appointments which are deactivated
-                $officer->appointments()
+                // Activate related future activities which are deactivated
+                $officer->activities()
                     ->where('status', 'Inactive')
-                    ->whereDate('appointment_time', '>=', now())
+                    ->whereDate('date', '>=', now())
                     ->whereHas('visitor', function ($query) {
                         $query->where('Status', 'active');
                     })
@@ -77,11 +77,10 @@ class OfficerController extends Controller
                 // Deactivate the visitor
                 $officer->update(['status' => 'Inactive']);
 
-                // Deactivate related future appointments
-                $officer->appointments()
-                    ->where('status', 'Active')
-                    ->whereDate('appointment_time', '>=', now())
-                    ->update(['status' => 'Inactive']);
+                // Deactivate related future activities
+                $officer->activities()
+                    ->where('status', 'InActive')
+                    ->update(['status' => 'Active']);
 
                 $message = 'Officer Deactivated successfully';
             } else {

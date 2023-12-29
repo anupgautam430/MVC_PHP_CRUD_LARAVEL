@@ -14,20 +14,20 @@
 <body>
     <div class="container m-4">
     <a class="btn btn-dark" href="{{url('/')}}">Home</a> <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
-        <h1>Edit visitors info</h1>
+        <h1 class="text-center">Edit visitors info</h1>
         <form class="form-control" method="post" action="{{route('visitor.update', ['visitor' => $visitor])}}" >
             @csrf
             @method('put')
-            
-            <div>
-                @if($errors->any())
-                <ul>
-                    @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                    @endforeach
-                </ul>
+
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
-        </div>
         <div class="form-group">
             <label>Name</label>
             <input class="form-control" type="text" name="Name"  value="{{$visitor->Name}}">

@@ -19,7 +19,7 @@
             <a class="btn btn-primary" href="{{route('workofday.create')}}">Add new data</a>
         </div>
         @if(session()->has('success'))
-        <div>
+        <div class="alert alert-success">
             {{session('success')}}
         </div>
 

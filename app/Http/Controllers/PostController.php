@@ -22,15 +22,15 @@ class PostController extends Controller
 
 //store  in database and redirect to index
     public function store(Request $request){
-       
+
             $data = $request->validate([
                 'name' => 'required',
                 'status' => 'required|in:active',
             ]);
-    
+
             $newPost = Post::create($data);
-    
-            return redirect(route('post.index'));        
+
+            return redirect(route('post.index'));
     }
 
     //edit the data
@@ -61,11 +61,11 @@ class PostController extends Controller
         if ($post->status === 'active' && $activeOfficers) {
             return redirect(route('post.index'))->with('error', 'Cannot activate post. Active officer found.');
         }
-        
+
         // this section handle the status
         $newStatus = $post->status === 'active' ? 'inactive' : 'active';
         $post->update(['status' => $newStatus]);
 
-        return redirect(route('post.index'))->with('success', 'Post status handeled successfully');
+        return redirect(route('post.index'))->with('success', 'Post status handled successfully');
     }
 }

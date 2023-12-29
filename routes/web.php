@@ -5,9 +5,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\WorkofdayController;
-use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AppointmentController;
-
+use App\Http\Controllers\ActivityController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,7 +37,7 @@ Route::get('/visitor/create',[VisitorController::class,'create'])->name('visitor
 Route::post('/visitor',[VisitorController::class,'store'])->name('visitor.store');
 Route::get('/visitor/{visitor}/edit',[VisitorController::class,'edit'])->name('visitor.edit');
 Route::put('/visitor/{visitor}/update',[VisitorController::class,'update'])->name('visitor.update');
-Route::get('/visitors/{visitor}/appointments', [VisitorController::class, 'appointments'])->name('visitor.appointments');
+Route::get('/visitors/{visitor}/activities', [VisitorController::class, 'activity'])->name('visitor.appointments');
 Route::post('/visitors/{visitor}/handle', [VisitorController::class, 'handle'])->name('visitor.handle');
 
 
@@ -49,7 +48,7 @@ Route::get('/officer/create', [OfficerController::class, 'create'])->name('offic
 Route::post('/officer', [OfficerController::class, 'store'])->name('officer.store');
 Route::get('/officer/{officer}/edit', [OfficerController::class, 'edit'])->name('officer.edit');
 Route::put('/officer/{officer}', [OfficerController::class, 'update'])->name('officer.update');
-Route::get('/officer/{officer}/appointments', [OfficerController::class, 'appointments'])->name('officer.appointments');
+Route::get('/officer/{officer}/activities', [OfficerController::class, 'activity'])->name('officer.appointments');
 Route::post('/officer/{officer}/handle', [OfficerController::class, 'handle'])->name('officer.handle');
 
 
@@ -61,17 +60,19 @@ Route::post('/workofday', [WorkofdayController::class, 'store'])->name('workofda
 Route::get('/workofday/{workofday}/edit', [WorkofdayController::class, 'edit'])->name('workofday.edit');
 Route::put('/workofday/{workofday}', [WorkofdayController::class, 'update'])->name('workofday.update');
 
-//Route for ActivityController
-Route::get('/activity',[ActivityController::class,'index'])->name('activity.index');
-Route::get('/activity/create', [ActivityController::class, 'create'])->name('activity.create');
-Route::post('/activity', [ActivityController::class, 'store'])->name('activity.store');
-Route::get('/activity/{activity}/edit', [ActivityController::class, 'edit'])->name('activity.edit');
-Route::put('/activity/{activity}', [ActivityController::class, 'update'])->name('activity.update');
-Route::put('/activities/{activity}/cancel', [ActivityController::class, 'cancel'])->name('activity.cancel');
-
-
-
-//route for Appointment
+//Route for AppointmentController
 Route::get('/appointments',[AppointmentController::class,'index'])->name('appointments.index');
 Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
 Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+Route::get('/appointments/{appointments}/edit', [AppointmentController::class, 'edit'])->name('appointments.edit');
+Route::put('/appointments/{appointments}', [AppointmentController::class, 'update'])->name('appointments.update');
+Route::put('/appointments/{appointments}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+
+
+
+//route for AppointmentController
+Route::get('/activities',[ActivityController::class,'index'])->name('activities.index');
+Route::get('/activities/create', [ActivityController::class, 'create'])->name('activities.create');
+Route::post('/activities', [ActivityController::class, 'store'])->name('activities.store');
+Route::put('/activities/{activities}/cancel', [ActivityController::class, 'cancel'])->name('activities.cancel');
+

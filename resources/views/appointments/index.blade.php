@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,44 +12,77 @@
 </head>
 <body>
     <div class="container m-4">
-        <a class="btn btn-dark" href="{{ url('/') }}">Home</a>
+            <a class="btn btn-dark" href="{{ url('/') }}">home</a>
     </div>
     <div class="container">
-        <h1 class="text-center">Apointments list</h1>
+        <h1 class="text-center">Appointment</h1>
         <div>
-            <a class="btn btn-primary" href="{{route('appointments.create')}}">Add New Appointment</a>
+            <a class="btn btn-primary" href="{{route('appointments.create')}}">Add new appointment</a>
         </div>
         @if(session()->has('success'))
-        <div>
-            {{session('success')}}
-        </div>
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
         @endif
 
-        @if($appointments->isEmpty())
-         <p>No appointments available.</p>
-        @else
+        @if(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+        <form method="GET" action="{{ route('appointments.index') }}" class="mb-3">
+    <div class="input-group">
+        <select name="search_by" class="form-select">
+            <option value="name" {{ $searchBy === 'name' ? 'selected' : '' }}>Name</option>
+            <option value="type" {{ $searchBy === 'type' ? 'selected' : '' }}>Type</option>
+            <option value="status" {{ $searchBy === 'status' ? 'selected' : '' }}>Status</option>
+            <option value="Date" {{ $searchBy === 'Date' ? 'selected' : '' }}>Date</option>
+        </select>
+        <input type="text" name="search" class="form-control" placeholder="Search" value="{{ $search }}">
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+    </div>
+</form>
         <table class="table">
             <tr>
-                <th class="text-center">Visitor name</th>
-                <th class="text-center">Officer name</th>
-                <th class="text-center">Time</th>
-                <th class="text-center">Status</th>
+                <th>Name</th>
+                <th>Visitor</th>
+                <th>Officer</th>
+                <th>Status</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Added On</th>
+                <th>Edit</th>
+                <th>Action</th>
             </tr>
             @foreach($appointments as $appoint)
             <tr>
-                <td class="text-center">{{$appoint->visitor->Name}}</td>
-                <td class="text-center">{{$appoint->officer->name}}</td>
-                <td class="text-center">{{$appoint->appointment_time}}</td>
-                <td class="text-center">{{$appoint->status}}</td>
+                <td>{{$appoint->name}}</td>
+                <td>{{$appoint->visitor->Name}}</td>
+                <td>{{$appoint->officer->name}}</td>
+                <td>{{ $appoint->status}}</td>
+                <td>{{$appoint->type}}</td>
+                <td>{{$appoint->date}}</td>
+                <td>{{$appoint->start_time}}</td>
+                <td>{{$appoint->end_time}}</td>
+                <td>{{$appoint->added_on}}</td>
+                <td>
+                    <a class="btn btn-dark" href="{{route('appointments.edit', ['appointments' => $appoint])}}">Edit</a>
+                </td>
+                <td><form action="{{ route('appointments.cancel', ['appointments' => $appoint]) }}" method="post">
+                @csrf
+                @method('PUT')
+                <button type="submit" class="btn {{$appoint->status=='Active'  ?  'btn-danger' : 'btn-success'}}">
+                    {{ $appoint->status == 'Cancelled' ? 'Activate' : 'Cancel' }}
+                </button>
+            </form></td>
             </tr>
             @endforeach
-   
         </table>
-        @endif
     </div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>
 </html>

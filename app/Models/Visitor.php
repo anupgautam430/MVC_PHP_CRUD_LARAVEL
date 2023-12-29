@@ -16,13 +16,14 @@ class Visitor extends Model
         'Status'
     ];
 
-    public function appointmentsWithOfficers()
+    public function activityWithOfficers()
     {
         return $this->hasMany(Appointment::class)->with('officer');
     }
 
-    //accessing appointment table
-    public function appointments()
+
+    //accessing activity table
+    public function activities()
     {
         return $this->hasMany(Appointment::class);
     }

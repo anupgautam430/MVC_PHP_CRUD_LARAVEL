@@ -11,12 +11,13 @@
     </style>
 </head>
 <body>
-    <div class="container m-4 p-1">
+    <div class="container m-4">
         <a class="btn btn-dark" href="{{url('/')}}">Home</a>
+    </div>
+    <div class="container">
         <h1 class="text-center">Visitor</h1>
-        <div class="container">
             <a class="btn btn-primary" href="{{route('visitor.create')}}">Add new Visitor</a>
-        </div>
+
         @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ session('success') }}

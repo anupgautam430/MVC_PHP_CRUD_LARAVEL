@@ -56,7 +56,7 @@ INSERT INTO `activities` (`id`, `officer_id`, `visitor_id`, `name`, `type`, `sta
 -- --------------------------------------------------------
 
 --
--- Table structure for table `appointments`
+-- Table structure for table `activities`
 --
 
 CREATE TABLE `appointments` (
@@ -70,7 +70,7 @@ CREATE TABLE `appointments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `appointments`
+-- Dumping data for table `activities`
 --
 
 INSERT INTO `appointments` (`id`, `visitor_id`, `officer_id`, `appointment_time`, `status`, `created_at`, `updated_at`) VALUES
@@ -281,7 +281,7 @@ ALTER TABLE `activities`
   ADD KEY `activities_visitor_id_foreign` (`visitor_id`);
 
 --
--- Indexes for table `appointments`
+-- Indexes for table `activities`
 --
 ALTER TABLE `appointments`
   ADD PRIMARY KEY (`id`),
@@ -359,7 +359,7 @@ ALTER TABLE `activities`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `appointments`
+-- AUTO_INCREMENT for table `activities`
 --
 ALTER TABLE `appointments`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
@@ -424,7 +424,7 @@ ALTER TABLE `activities`
   ADD CONSTRAINT `activities_visitor_id_foreign` FOREIGN KEY (`visitor_id`) REFERENCES `visitors` (`id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `appointments`
+-- Constraints for table `activities`
 --
 ALTER TABLE `appointments`
   ADD CONSTRAINT `appointments_officer_id_foreign` FOREIGN KEY (`officer_id`) REFERENCES `officers` (`id`),

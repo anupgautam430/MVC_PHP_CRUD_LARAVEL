@@ -11,16 +11,21 @@ return new class extends Migration
      */
     public function up(): void
 {
-    Schema::create('appointments', function (Blueprint $table) {
-        $table->id();
-        $table->unsignedBigInteger('visitor_id');
+    Schema::create('activities', function (Blueprint $table) {
+        $table->id('ActivityId');
+       // $table->unsignedBigInteger('visitor_id');
         $table->unsignedBigInteger('officer_id');
         $table->dateTime('appointment_time');
-        $table->string('status')->default('active');
+        $table->date('Start_Date');
+        $table->time('Start_Time');
+        $table->date('End_Date');
+        $table->time('End_Time');
+        $table->enum('Status', ['Active', 'Cancelled'])->default('Active');
+        $table->enum('Type', ['Leave', 'Break', 'Appointment']);
         $table->timestamps();
 
         // Foreign key constraints
-        $table->foreign('visitor_id')->references('id')->on('visitors');
+        //$table->foreign('visitor_id')->references('id')->on('visitors');
         $table->foreign('officer_id')->references('id')->on('officers');
     });
 }
@@ -30,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('activities');
     }
 };

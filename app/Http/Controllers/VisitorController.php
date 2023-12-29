@@ -12,16 +12,16 @@ class VisitorController extends Controller
         return view('visitor.index',['visitor'=> $visitor]);
     }
 
-    //create page 
+    //create page
     public function create(){
         return view('visitor.create');
     }
 
-    
+
     //store  in database and redirect to index
     public function store(Request $requests)
     {
-        
+
         $data = $requests->validate([
             'Name' => 'required',
             'Mobile_no'=>'required',
@@ -30,7 +30,7 @@ class VisitorController extends Controller
         ]);
 
         $newVisitor = Visitor::create($data);
-        return redirect(route('visitor.index'));        
+        return redirect(route('visitor.index'));
     }
 
         //this access the edit page
@@ -52,16 +52,16 @@ class VisitorController extends Controller
             return redirect(route('visitor.index'))->with('success', 'Visitor updated successfully');
         }
 
-        //appointment 
-        public function appointments(Visitor $visitor)
+        //appointment
+        public function activity(Visitor $visitor)
         {
-            // Load the visitor appointments with officers
-            $appointments = $visitor->appointmentsWithOfficers;
+            // Load the visitor activities with officers
+            $activities = $visitor->activityWithOfficers;
 
-            return view('visitor.appointments', ['visitor' => $visitor, 'appointments' => $appointments]);
+            return view('visitor.appointments', ['visitor' => $visitor, 'activities' => $activities]);
         }
 
-         // Activate or deactivate a visitor and related appointments(3.a: visitor appointment handling)
+         // Activate or deactivate a visitor and related activities(3.a: visitor appointment handling)
         public function handle(Visitor $visitor)
         {
             $action = request('action');
@@ -70,10 +70,10 @@ class VisitorController extends Controller
                 // Activate the visitor
                 $visitor->update(['Status' => 'active']);
 
-                // Activate related future appointments which are deactivated
-                $visitor->appointments()
+                // Activate related future activities which are deactivated
+                $visitor->activities()
                     ->where('status', 'inactive')
-                    ->whereDate('appointment_time', '>=', now())
+                    ->whereDate('date', '>=', now())
                     ->whereHas('officer', function ($query) {
                         $query->where('status', 'active');
                     })
@@ -84,11 +84,16 @@ class VisitorController extends Controller
                 // Deactivate the visitor
                 $visitor->update(['Status' => 'inactive']);
 
-                // Deactivate related future appointments
-                $visitor->appointments()
-                    ->where('status', 'active')
-                    ->whereDate('appointment_time', '>=', now())
-                    ->update(['status' => 'inactive']);
+                // Deactivate related future activities
+//                $visitor->activities()
+//                    ->where('status', 'active')
+//                    ->whereDate('date', '>=', now())
+//                    ->update(['status' => 'inactive']);
+
+                $visitor->activities()
+                    ->where('status', 'inactive')
+                    ->update(['status' => 'active']);
+
 
                 $message = 'Visitor deactivated successfully';
             } else {

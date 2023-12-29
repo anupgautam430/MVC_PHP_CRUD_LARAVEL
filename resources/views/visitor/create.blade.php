@@ -13,24 +13,26 @@
 </head>
 <body>
     <div class="container m-4">
-    <a class="btn btn-dark" href="{{url('/')}}">Home</a> <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>         
-    <h1>Add new Visitor</h1>
+    <a class="btn btn-dark" href="{{url('/')}}">Home</a> <a class="btn btn-dark" href="javascript:history.go(-1)">Back</a>
+    <h1 class="text-center">Add new Visitor</h1>
         <form class="form-control" method="post" action="{{route('visitor.store')}}" >
             @csrf
             @method('post')
-            
-        <div class="form-group">
+
+
             @if($errors->any())
+                <div class="alert alert-danger">
                 <ul>
                     @foreach($errors->all() as $error)
                     <li>{{$error}}</li>
                     @endforeach
                 </ul>
+                </div>
             @endif
-        </div>
+
         <div class="form-group">
             <label>Name</label>
-            <input class="form-control" type="text" name="Name" placeholder="Enter Post">
+            <input class="form-control" type="text" name="Name" placeholder="Enter visitor name">
         </div>
         <div class="form-group">
             <label>Mobile.no</label>

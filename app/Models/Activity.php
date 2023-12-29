@@ -9,26 +9,24 @@ class Activity extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'officer_id',
+        'ActivityId',
         'visitor_id',
-        'name',
-        'type',
-        'status',
-        'date',
-        'start_time',
-        'end_time',
-    ];
-
-    protected $dates = ['added_on', 'last_updated_on'];
+        'officer_id',
+        'Type',
+        'Start_Date',
+        'Start_Time',
+        'End_Date',
+        'End_Time',
+        'Status',
+        ];
+    protected $primaryKey = 'ActivityId';
+    public function visitor()
+    {
+        return $this->belongsTo(Visitor::class);
+    }
 
     public function officer()
     {
         return $this->belongsTo(Officer::class);
     }
-
-    public function visitor()
-    {
-        return $this->belongsTo(Visitor::class);
-    }
-    
 }
